@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface WeatherServicePort {
 
-    Mono<CurrentWeather> getWeatherByl(Double lon , Double lat);
+    Mono<CurrentWeather> getWeatherByLatAndLon(Double lon , Double lat);
 }
