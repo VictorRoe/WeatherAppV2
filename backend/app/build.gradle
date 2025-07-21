@@ -17,12 +17,28 @@ repositories {
 	mavenCentral()
 }
 
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// Logging
+	implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'  // Note: log4j-slf4j2-impl instead of log4j-slf4j-impl
+	implementation 'org.apache.logging.log4j:log4j-web:2.20.0'
+
+	// Exclude default logging from all configurations
+	configurations.all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+	}
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
