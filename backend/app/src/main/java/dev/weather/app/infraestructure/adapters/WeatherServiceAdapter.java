@@ -12,21 +12,26 @@ public class WeatherServiceAdapter implements WeatherServicePort {
 
     private final WebClient webClient;
 
-    @Value("${weatherapi.api-key}")
     private String apiKey;
 
-    public WeatherServiceAdapter(WebClient webClient) {
-        this.webClient = webClient;
+    private String baseUrl;
+
+    public WeatherServiceAdapter(WebClient.Builder webClientBuilder,
+                                 @Value("${weatherapi.base-url}") String baseUrl,
+                                 @Value("${weatherapi.api-key}") String apiKey) {
+        this.webClient = webClientBuilder.baseUrl(baseUrl).build();
+        this.apiKey = apiKey;
     }
 
     @Override
     public Mono<CurrentWeather> getWeatherByLatAndLon(Double lon, Double lat) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}")
-                        .queryParam("key", apiKey)
+                        .path("/data/2.5/weather")
                         .queryParam("lat", lat)
                         .queryParam("lon", lon)
+                        .queryParam("appid", apiKey)
+                        .queryParam("units", "metric")
                         .build())
                 .retrieve()
                 .bodyToMono(CurrentWeather.class);
