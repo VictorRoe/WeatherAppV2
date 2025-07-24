@@ -30,6 +30,11 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'  // Note: log4j-slf4j2-impl instead of log4j-slf4j-impl
 	implementation 'org.apache.logging.log4j:log4j-web:2.20.0'
 
+	// Redis Client
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'io.lettuce:lettuce-core'
+
 	// Exclude default logging from all configurations
 	configurations.all {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'

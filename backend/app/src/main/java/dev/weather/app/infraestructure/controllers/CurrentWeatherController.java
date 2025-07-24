@@ -21,7 +21,7 @@ public class CurrentWeatherController {
 
     @GetMapping("/weather")
     public Mono<CurrentWeather> getCurrentWeather(@RequestParam Double lon, Double lat){
-       logger.info("Solucitando clima para coordenadas: lat={}, lon={}",lat ,lon);
+       logger.info("Solicitando clima para coordenadas: lat={}, lon={}",lat ,lon);
 
        return weatherService.getWeatherByLatAndLon(lon, lat)
                .doOnSuccess(weather -> logger.info("Clima obtenido exitosamente para lat={}, long={}",
